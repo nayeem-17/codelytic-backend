@@ -15,7 +15,7 @@ COPY . .
 RUN mvn package -DskipTests
 
 # Create a new stage with the AdoptOpenJDK 17 base image for the final production container
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app

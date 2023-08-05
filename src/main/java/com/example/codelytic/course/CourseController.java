@@ -33,7 +33,7 @@ public class CourseController {
     }
 
     @PostMapping
-    ResponseEntity<Json> createCourse(
+    ResponseEntity<Object> createCourse(
             @RequestBody CreateCourseDTO courseDTO) {
         if (courseDTO == null) {
             throw new IllegalArgumentException(
@@ -52,7 +52,7 @@ public class CourseController {
     }
 
     @PutMapping
-    ResponseEntity<Json> updateCourse(
+    ResponseEntity<Object> updateCourse(
             @RequestBody UpdateCourseDTO courseDTO) {
         if (courseDTO == null) {
             throw new IllegalArgumentException(
@@ -77,21 +77,36 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Json> deleteCourse(
+    ResponseEntity<Object> deleteCourse(
             @PathVariable Long id) {
+        if (id < 1) {
+            throw new IllegalArgumentException(
+                    "the course id must be present");
+        }
         courseService.deleteCourse(id);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/subsection/lecture")
-    ResponseEntity<Json> createLecture(@RequestBody Lecture lecture) {
-        return ResponseEntity.ok().build();
+    @PostMapping("{id}/subsection/lecture")
+    ResponseEntity<Object> createLecture(
+            @PathVariable Long id,
+            @RequestBody Lecture lecture) {
+        // first create a subsection then add the subsection
+        Long subsectionId = courseService.createSubsection(id, lecture);
+        Object responseJson = new Object() {
+            public Long subsection = subsectionId;
+        };
+        // responseJson.put("subsection", subsectionId);
+
+        return ResponseEntity.ok().body(responseJson);
     }
 
-    @PostMapping("/subsection/{id}/quiz")
+    @PostMapping("{courseId}/subsection/{id}/quiz")
     ResponseEntity<Json> createQuiz(
+            @PathVariable Long courseId,
             @RequestBody Quiz quiz,
-            @PathVariable int id) {
+            @PathVariable Long id) {
+        courseService.addQuiz(courseId, id, quiz);
         return ResponseEntity.ok().build();
     }
 }

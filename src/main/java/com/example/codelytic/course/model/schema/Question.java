@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -16,6 +18,8 @@ import lombok.Data;
 
 @Data
 @Entity
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,5 +9,4 @@ public class CodelyticApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CodelyticApplication.class, args);
 	}
-
 }

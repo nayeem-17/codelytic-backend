@@ -10,4 +10,6 @@ public class UpdateCourseDTO {
     private String icon;
     private boolean isPremium;
     private boolean isLive;
+    private String description;
+
 }

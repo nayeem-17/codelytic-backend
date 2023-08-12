@@ -20,7 +20,9 @@ import com.example.codelytic.course.model.schema.Lecture;
 import com.example.codelytic.course.model.schema.Quiz;
 
 import io.swagger.v3.core.util.Json;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -47,6 +49,7 @@ public class CourseController {
         course.setIcon(courseDTO.getIcon());
         course.setLive(false);
         course.setPremium(false);
+        course.setDescription(courseDTO.getDescription());
         courseService.createCourse(course);
         return ResponseEntity.ok().build();
     }
@@ -54,6 +57,7 @@ public class CourseController {
     @PutMapping
     ResponseEntity<Object> updateCourse(
             @RequestBody UpdateCourseDTO courseDTO) {
+        log.trace("update course controller");
         if (courseDTO == null) {
             throw new IllegalArgumentException(
                     "The request body is empty or does not contain the required data for the CreateCourseDTO object.");
@@ -70,6 +74,7 @@ public class CourseController {
         updatedCourse.setLive(courseDTO.isLive());
         updatedCourse.setPremium(courseDTO.isPremium());
         updatedCourse.setTitle(courseDTO.getTitle());
+        updatedCourse.setDescription(courseDTO.getDescription());
 
         courseService.updateCourse(updatedCourse);
 

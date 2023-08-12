@@ -31,6 +31,7 @@ public class Course {
     private String icon;
     private boolean isPremium;
     private boolean isLive;
+    private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subsection> subsections;

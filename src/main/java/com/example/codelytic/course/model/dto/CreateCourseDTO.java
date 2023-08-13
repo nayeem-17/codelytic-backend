@@ -13,4 +13,5 @@ public class CreateCourseDTO {
     private String author;
     private String title;
     private String icon;
+    private String description;
 }

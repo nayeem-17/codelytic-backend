@@ -9,16 +9,15 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build and Test
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker Image
-        run: docker build -t my-app .
+      - name: Build and test
+        run: docker build -f Dockerfile-test -t my-app .
 
-      - name: Run Tests
-        run: docker run --rm my-app mvn test
+      - name: Run tests
+        run: docker run --rm my-app

@@ -131,4 +131,13 @@ public class CourseService {
         }
     }
 
+    public Course getCourse(Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if(course.isPresent()){
+            return course.get();
+        } else {
+            return null;
+        }
+    }
+
 }

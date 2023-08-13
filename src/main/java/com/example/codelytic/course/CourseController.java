@@ -34,6 +34,16 @@ public class CourseController {
         return courseService.getCourses();
     }
 
+    @GetMapping("/{courseId}")
+    public Course getCourse(
+            @PathVariable Long courseId) {
+        if (courseId < 1) {
+            throw new IllegalArgumentException(
+                    "the course id must be present");
+        }
+        return courseService.getCourse(courseId);
+    }
+
     @PostMapping
     ResponseEntity<Object> createCourse(
             @RequestBody CreateCourseDTO courseDTO) {

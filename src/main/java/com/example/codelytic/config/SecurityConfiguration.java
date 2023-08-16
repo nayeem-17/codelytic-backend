@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,10 +56,10 @@ public class SecurityConfiguration {
         // set permissions on endpoints
         http.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
-                        .requestMatchers("/authenticate").permitAll()
+                        // .requestMatchers("/authenticate").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
-                        .requestMatchers("/course/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated());
 
         // Add a filter to validate the tokens with every request
@@ -68,10 +67,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/authenticate");
-    }
+    // @Bean
+    // public WebSecurityCustomizer webSecurityCustomizer() {
+    // return (web) -> web.ignoring().requestMatchers("/authenticate");
+    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

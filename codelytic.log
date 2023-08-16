@@ -1,0 +1,15 @@
+2023-08-16 21:27:33 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/swagger-ui/index.html', 'method': 'GET', 'status': 304, 'executionTime': 32}
+2023-08-16 21:27:33 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/swagger-ui/swagger-ui.css', 'method': 'GET', 'status': 200, 'executionTime': 37}
+2023-08-16 21:27:33 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/swagger-ui/swagger-ui-standalone-preset.js', 'method': 'GET', 'status': 200, 'executionTime': 41}
+2023-08-16 21:27:33 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/swagger-ui/swagger-ui-bundle.js', 'method': 'GET', 'status': 200, 'executionTime': 57}
+2023-08-16 21:27:33 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/swagger-ui/swagger-initializer.js', 'method': 'GET', 'status': 200, 'executionTime': 106}
+2023-08-16 21:27:34 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/api-docs/swagger-config', 'method': 'GET', 'status': 200, 'executionTime': 69}
+2023-08-16 21:27:35 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/api-docs', 'method': 'GET', 'status': 200, 'executionTime': 1146}
+2023-08-16 21:27:39 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 310}
+2023-08-16 21:27:39 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 10}
+2023-08-16 21:27:39 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 27}
+2023-08-16 21:27:40 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 18}
+2023-08-16 21:27:40 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 17}
+2023-08-16 21:27:40 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 29}
+2023-08-16 21:27:40 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 8}
+2023-08-16 21:27:41 TRACE c.e.c.c.RouteLoggingInterceptor:36 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 22}

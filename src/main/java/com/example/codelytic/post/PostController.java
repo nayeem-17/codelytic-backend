@@ -12,5 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 public class PostController {
     @Autowired
     private PostService discussionService;
+    /*
+     * 
+     * List of routes
+     * - create Post
+     * - update Post
+     * - delete Post
+     * - get one Post
+     * - get all Post
+     */
 
 }

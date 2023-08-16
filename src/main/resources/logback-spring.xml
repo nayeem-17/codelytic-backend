@@ -1,0 +1,27 @@
+<configuration>
+
+    <!-- Appenders -->
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RouteFileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>codelytic.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Loggers -->
+    <logger name="com.example.codelytic.config.RouteLoggingInterceptor" level="TRACE">
+        <appender-ref ref="RouteFileAppender"/>
+    </logger>
+
+    <!-- Set root logger level to INFO -->
+    <root level="INFO">
+        <appender-ref ref="ConsoleAppender"/>
+    </root>
+
+</configuration>

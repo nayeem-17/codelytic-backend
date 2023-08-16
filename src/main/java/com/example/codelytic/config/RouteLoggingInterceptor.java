@@ -30,6 +30,10 @@ public class RouteLoggingInterceptor implements HandlerInterceptor {
         String route = request.getRequestURI();
         String method = request.getMethod();
         int status = response.getStatus();
+        if (route.startsWith("/swagger-ui")
+                ||
+                route.startsWith("/api-docs"))
+            return;
         long executionTime = stopWatch.getTotalTimeMillis();
         String logMessage = String.format("{'route': '%s', 'method': '%s', 'status': %d, 'executionTime': %d}",
                 route, method, status, executionTime);

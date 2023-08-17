@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.codelytic.course.model.dto.CreateCourseDTO;
 import com.example.codelytic.course.model.dto.UpdateCourseDTO;
 import com.example.codelytic.course.model.schema.Course;
-import com.example.codelytic.course.model.schema.Lecture;
-import com.example.codelytic.course.model.schema.Quiz;
 
-import io.swagger.v3.core.util.Json;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -60,7 +57,7 @@ public class CourseController {
         course.setLive(false);
         course.setPremium(false);
         course.setDescription(courseDTO.getDescription());
-        courseService.createCourse(course);
+        this.courseService.createCourse(course);
         return ResponseEntity.ok().build();
     }
 
@@ -102,28 +99,6 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("{id}/subsection/lecture")
-    ResponseEntity<Object> createLecture(
-            @PathVariable Long id,
-            @RequestBody Lecture lecture) {
-        // first create a subsection then add the subsection
-        Long subsectionId = courseService.createSubsection(id, lecture);
-        Object responseJson = new Object() {
-            public Long subsection = subsectionId;
-        };
-        // responseJson.put("subsection", subsectionId);
-
-        return ResponseEntity.ok().body(responseJson);
-    }
-
-    @PostMapping("{courseId}/subsection/{id}/quiz")
-    ResponseEntity<Json> createQuiz(
-            @PathVariable Long courseId,
-            @RequestBody Quiz quiz,
-            @PathVariable Long id) {
-        courseService.addQuiz(courseId, id, quiz);
-        return ResponseEntity.ok().build();
-    }
 }
 
 // http://localhost:8000/swagger-ui/index.html#/

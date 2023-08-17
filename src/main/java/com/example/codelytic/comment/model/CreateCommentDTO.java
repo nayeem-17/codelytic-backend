@@ -1,4 +1,4 @@
-package com.example.codelytic.comment;
+package com.example.codelytic.comment.model;
 
 import lombok.Data;
 

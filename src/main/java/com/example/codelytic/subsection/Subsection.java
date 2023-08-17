@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.codelytic.lecture.Lecture;
-import com.example.codelytic.quiz.Quiz;
+import com.example.codelytic.quiz.model.Quiz;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -34,7 +34,7 @@ public class Subsection {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Lecture> lectures;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Quiz quiz;
 
     @CreationTimestamp

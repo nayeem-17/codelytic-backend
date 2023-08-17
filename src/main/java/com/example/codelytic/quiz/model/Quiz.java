@@ -1,4 +1,4 @@
-package com.example.codelytic.quiz;
+package com.example.codelytic.quiz.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,26 +8,26 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
-@Data
 @Entity
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@Data
 
-public class Question {
+public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String question;
 
-    @ElementCollection
-    private List<String> options;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Question> questions;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

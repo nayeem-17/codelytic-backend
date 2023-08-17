@@ -1,4 +1,4 @@
-package com.example.codelytic.comment;
+package com.example.codelytic.comment.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

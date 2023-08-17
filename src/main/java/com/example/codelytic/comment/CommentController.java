@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.codelytic.comment.model.Comment;
+import com.example.codelytic.comment.model.CreateCommentDTO;
 import com.example.codelytic.post.PostService;
 import com.example.codelytic.post.model.Post;
 

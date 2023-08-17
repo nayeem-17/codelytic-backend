@@ -1,4 +1,4 @@
-package com.example.codelytic.course.model.schema;
+package com.example.codelytic.quiz.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,23 +15,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
-@Data
 @Entity
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@Data
 
-public class Subsection {
+public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Lecture lecture;
-
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Quiz> quiz;
+    private List<Question> questions;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

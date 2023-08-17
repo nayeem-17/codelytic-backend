@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.codelytic.comment.Comment;
+import com.example.codelytic.comment.model.Comment;
 import com.example.codelytic.tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

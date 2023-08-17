@@ -32,7 +32,7 @@ public class Subsection {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Lecture> lecture;
+    private List<Lecture> lectures;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Quiz quiz;

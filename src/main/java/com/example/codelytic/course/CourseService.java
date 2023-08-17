@@ -18,9 +18,9 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void createCourse(Course course) {
+    public Course createCourse(Course course) {
         System.out.println(course);
-        courseRepository.save(course);
+        return courseRepository.save(course);
     }
 
     public List<Course> getCourses() {
@@ -46,7 +46,7 @@ public class CourseService {
             // provided)
             existingCourse.setPremium(updatedCourse.isPremium());
             existingCourse.setLive(updatedCourse.isLive());
-
+            existingCourse.setDescription(updatedCourse.getDescription());
             courseRepository.save(existingCourse);
         } else {
 

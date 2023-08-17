@@ -57,8 +57,8 @@ public class CourseController {
         course.setLive(false);
         course.setPremium(false);
         course.setDescription(courseDTO.getDescription());
-        this.courseService.createCourse(course);
-        return ResponseEntity.ok().build();
+        course = this.courseService.createCourse(course);
+        return ResponseEntity.ok().body(course);
     }
 
     @PutMapping
@@ -82,7 +82,8 @@ public class CourseController {
         updatedCourse.setPremium(courseDTO.isPremium());
         updatedCourse.setTitle(courseDTO.getTitle());
         updatedCourse.setDescription(courseDTO.getDescription());
-
+        System.out.println(
+                "updated course: " + updatedCourse.toString());
         courseService.updateCourse(updatedCourse);
 
         return ResponseEntity.ok().build();

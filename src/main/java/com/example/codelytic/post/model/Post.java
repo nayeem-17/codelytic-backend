@@ -1,4 +1,4 @@
-package com.example.codelytic.post;
+package com.example.codelytic.post.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class Post {
     private String content;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("post") // Exclude from JSON serialization
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)

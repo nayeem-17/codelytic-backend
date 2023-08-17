@@ -1,4 +1,4 @@
-package com.example.codelytic.post;
+package com.example.codelytic.post.model;
 
 import java.util.List;
 

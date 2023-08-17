@@ -7,7 +7,8 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.codelytic.post.Post;
+import com.example.codelytic.post.model.Post;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,31 +22,38 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Entity
 @Data
-@NoArgsConstructor
+@JsonIgnoreProperties(value = {
+        "createdAt",
+        "updatedAt",
+        "post"
+})
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
 
-    boolean isParentComment = false;
-
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_comment_id")
+    @JsonIgnoreProperties({ "post", "childComments" }) // Exclude from JSON serialization
     private Comment parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({ "post", "parentComment" }) // Exclude from JSON serialization
     private List<Comment> childComments = new ArrayList<>();
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.codelytic.post.model.CreatePostDTO;
+import com.example.codelytic.post.model.Post;
 import com.example.codelytic.tag.Tag;
 import com.example.codelytic.tag.TagService;
 

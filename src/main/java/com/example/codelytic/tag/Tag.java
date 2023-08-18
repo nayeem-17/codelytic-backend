@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "post" })
 
 public class Tag {
     @Id

@@ -1,5 +1,6 @@
 package com.example.codelytic.course;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.codelytic.course.model.dto.CreateCourseDTO;
 import com.example.codelytic.course.model.dto.UpdateCourseDTO;
 import com.example.codelytic.course.model.schema.Course;
-import com.example.codelytic.course.model.schema.Lecture;
-import com.example.codelytic.course.model.schema.Quiz;
+import com.example.codelytic.tag.Tag;
+import com.example.codelytic.tag.TagService;
 
-import io.swagger.v3.core.util.Json;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/")
     List<Course> getCourses() {
@@ -53,6 +55,16 @@ public class CourseController {
         }
         System.out.println(courseDTO.getAuthor());
         System.out.println(courseDTO);
+        List<String> tags = new ArrayList<>();
+        if (courseDTO.getTagIds().size() > 0) {
+            courseDTO.getTagIds().forEach(tagId -> {
+                if (tagId > 0) {
+                    Tag tag = tagService.findById(tagId);
+                    if (tag != null)
+                        tags.add(tag.getName());
+                }
+            });
+        }
         Course course = new Course();
         course.setAuthor(courseDTO.getAuthor());
         course.setTitle(courseDTO.getTitle());
@@ -60,8 +72,9 @@ public class CourseController {
         course.setLive(false);
         course.setPremium(false);
         course.setDescription(courseDTO.getDescription());
-        courseService.createCourse(course);
-        return ResponseEntity.ok().build();
+        course.setTags(tags);
+        course = this.courseService.createCourse(course);
+        return ResponseEntity.ok().body(course);
     }
 
     @PutMapping
@@ -85,7 +98,20 @@ public class CourseController {
         updatedCourse.setPremium(courseDTO.isPremium());
         updatedCourse.setTitle(courseDTO.getTitle());
         updatedCourse.setDescription(courseDTO.getDescription());
-
+        List<String> tags = new ArrayList<>();
+        if (courseDTO.getTagIds().size() > 0) {
+            courseDTO.getTagIds().forEach(tagId -> {
+                if (tagId > 0) {
+                    Tag tag = tagService.findById(tagId);
+                    if (tag != null)
+                        tags.add(tag.getName());
+                }
+            });
+        }
+        System.out.println(tags);
+        updatedCourse.setTags(tags);
+        System.out.println(
+                "updated course: " + updatedCourse.toString());
         courseService.updateCourse(updatedCourse);
 
         return ResponseEntity.ok().build();
@@ -102,28 +128,6 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("{id}/subsection/lecture")
-    ResponseEntity<Object> createLecture(
-            @PathVariable Long id,
-            @RequestBody Lecture lecture) {
-        // first create a subsection then add the subsection
-        Long subsectionId = courseService.createSubsection(id, lecture);
-        Object responseJson = new Object() {
-            public Long subsection = subsectionId;
-        };
-        // responseJson.put("subsection", subsectionId);
-
-        return ResponseEntity.ok().body(responseJson);
-    }
-
-    @PostMapping("{courseId}/subsection/{id}/quiz")
-    ResponseEntity<Json> createQuiz(
-            @PathVariable Long courseId,
-            @RequestBody Quiz quiz,
-            @PathVariable Long id) {
-        courseService.addQuiz(courseId, id, quiz);
-        return ResponseEntity.ok().build();
-    }
 }
 
 // http://localhost:8000/swagger-ui/index.html#/

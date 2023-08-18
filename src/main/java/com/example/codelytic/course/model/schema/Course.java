@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.subsection.Subsection;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -31,10 +32,13 @@ public class Course {
     private String icon;
     private boolean isPremium;
     private boolean isLive;
+    @Column(length = 5120)
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subsection> subsections;
+
+    private List<String> tags;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

@@ -14,6 +14,12 @@ public class TagService {
         return tagRepository.findAll();
     }
 
+    public Tag findById(Long id) {
+        return tagRepository
+                .findById(id)
+                .orElse(null);
+    }
+
     public void createTags(List<Tag> tags) {
         tagRepository.saveAll(tags);
     }

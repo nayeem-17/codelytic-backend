@@ -1,4 +1,4 @@
-package com.example.codelytic.course.model.schema;
+package com.example.codelytic.quiz.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +28,8 @@ public class Question {
 
     @ElementCollection
     private List<String> options;
+
+    private String answer;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

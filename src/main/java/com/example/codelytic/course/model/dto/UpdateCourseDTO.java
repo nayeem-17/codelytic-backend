@@ -1,5 +1,7 @@
 package com.example.codelytic.course.model.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -11,5 +13,6 @@ public class UpdateCourseDTO {
     private boolean isPremium;
     private boolean isLive;
     private String description;
+    private List<Long> tagIds;
 
 }

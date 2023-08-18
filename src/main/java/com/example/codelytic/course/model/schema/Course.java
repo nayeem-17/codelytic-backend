@@ -32,10 +32,13 @@ public class Course {
     private String icon;
     private boolean isPremium;
     private boolean isLive;
+    @Column(length = 5120)
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subsection> subsections;
+
+    private List<String> tags;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

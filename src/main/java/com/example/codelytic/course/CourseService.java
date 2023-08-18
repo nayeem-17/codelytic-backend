@@ -47,6 +47,7 @@ public class CourseService {
             existingCourse.setPremium(updatedCourse.isPremium());
             existingCourse.setLive(updatedCourse.isLive());
             existingCourse.setDescription(updatedCourse.getDescription());
+            existingCourse.setTags(updatedCourse.getTags());
             courseRepository.save(existingCourse);
         } else {
 

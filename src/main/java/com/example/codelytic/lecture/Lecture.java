@@ -24,7 +24,10 @@ public class Lecture {
     private Long id;
 
     private String title;
+
+    @Column(length = 10240)
     private String body;
+
     private boolean isLive;
 
     @CreationTimestamp

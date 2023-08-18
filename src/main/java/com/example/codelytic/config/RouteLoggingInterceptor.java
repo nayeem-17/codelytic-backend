@@ -38,6 +38,5 @@ public class RouteLoggingInterceptor implements HandlerInterceptor {
         String logMessage = String.format("{'route': '%s', 'method': '%s', 'status': %d, 'executionTime': %d}",
                 route, method, status, executionTime);
         log.trace(logMessage);
-        // System.out.println(logMessage);
     }
 }

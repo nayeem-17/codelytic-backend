@@ -1,4 +1,4 @@
-package com.example.codelytic.config;
+package com.example.codelytic.auth;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,11 +13,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class JwtTokenUtil {
+public class JWTService {
 
     // private static final long serialVersionUID = -2550185165626007488L;
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 5 * 60;
 
     private String secret = "zdtlD3JK56m6wTTgsNFhqzjqP";
 

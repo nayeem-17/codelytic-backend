@@ -1,4 +1,4 @@
-package com.example.codelytic.config;
+package com.example.codelytic.auth;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -16,6 +16,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
+
+        System.out.println(authException);
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }

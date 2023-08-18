@@ -1,4 +1,4 @@
-package com.example.codelytic.config;
+package com.example.codelytic.auth;
 
 import java.io.Serializable;
 

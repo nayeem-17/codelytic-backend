@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.codelytic.user.model.Role;
 import com.example.codelytic.user.model.User;
 import com.example.codelytic.user.model.UserDTO;
 
@@ -32,7 +33,11 @@ public class UserController {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         // user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
-        user.setRole(userDTO.getRole());
+// <<<<<<< auth
+//         user.setRole(userDTO.getRole());
+// =======
+        user.setRole(Role.CONTENT_CREATOR);
+// >>>>>>> master
 
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodedPassword);
@@ -40,6 +45,7 @@ public class UserController {
         try {
             user = userService.saveUser(user);
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.badRequest().body("Email already exists");
         }
 

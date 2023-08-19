@@ -29,8 +29,13 @@ public class User implements UserDetails {
     private String name;
     @Column(unique = true)
     private String email;
+// <<<<<<< auth
 
-    private int subscriptionStatus;
+//     private int subscriptionStatus;
+// =======
+ 
+    private int subscriptionStatus = 0;
+// >>>>>>> master
     @Enumerated(EnumType.STRING)
     private Role role;
 

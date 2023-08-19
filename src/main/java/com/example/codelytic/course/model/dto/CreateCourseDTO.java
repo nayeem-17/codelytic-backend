@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCourseDTO {
-    private String author;
     private String title;
     private String icon;
     private String description;

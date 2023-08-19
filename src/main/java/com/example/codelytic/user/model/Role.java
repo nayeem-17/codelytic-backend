@@ -33,7 +33,7 @@ public enum Role {
                                         MANAGER_UPDATE,
                                         MANAGER_DELETE,
                                         MANAGER_CREATE)),
-        MANAGER(
+        CONTENT_CREATOR(
                         Set.of(
                                         MANAGER_READ,
                                         MANAGER_UPDATE,

@@ -80,6 +80,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 System.out.println(
                         "JwtRequestFilter.doFilterInternal() - userEmail: " + userEmail);
+// i want to add the user's email to the request
+                request.setAttribute("user_email", userEmail);
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,

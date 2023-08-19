@@ -61,7 +61,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
                         .requestMatchers("/user/register").permitAll()
-                        // .requestMatchers("/**").permitAll()
+                        .requestMatchers("/course/**").permitAll()
+                        .requestMatchers("/tags/**").permitAll()
+                        // .requestMatchers("/**").permitAll() 
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider);
 

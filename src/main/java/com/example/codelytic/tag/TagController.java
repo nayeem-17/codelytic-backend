@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,11 @@ public class TagController {
     private TagService tagService;
 
     @GetMapping
-    List<Tag> getTags() {
+    List<Tag> getTags(
+       
+    ) {
+        String email= SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(email);
         return tagService.getTags();
     }
 

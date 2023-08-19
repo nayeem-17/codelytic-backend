@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class UpdateCourseDTO {
     private Long id;
-    private String author;
     private String title;
     private String icon;
     private boolean isPremium;

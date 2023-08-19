@@ -28,9 +28,7 @@ public class UserController {
     ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
-        user.setGender(userDTO.getGender());
         user.setEmail(userDTO.getEmail());
-        user.setBirthDate(userDTO.getBirthDate());
         user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
         user.setRole(userDTO.getRole());
 

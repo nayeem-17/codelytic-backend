@@ -139,4 +139,8 @@ public class CourseService {
         }
     }
 
+    public List<Course> getCoursesByAuthor(String email) {
+        return courseRepository.findByAuthor(email);
+    }
+
 }

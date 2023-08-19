@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,11 @@ public class CourseController {
     List<Course> getCourses() {
         return courseService.getCourses();
     }
+    @GetMapping("/by-author")
+    List<Course> getCoursesByAuthor() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return courseService.getCoursesByAuthor(email);
+    }
 
     @GetMapping("/{courseId}")
     public Course getCourse(
@@ -53,7 +59,7 @@ public class CourseController {
             throw new IllegalArgumentException(
                     "The request body is empty or does not contain the required data for the CreateCourseDTO object.");
         }
-        System.out.println(courseDTO.getAuthor());
+        // System.out.println(courseDTO.getAuthor());
         System.out.println(courseDTO);
         List<String> tags = new ArrayList<>();
         if (courseDTO.getTagIds().size() > 0) {
@@ -66,7 +72,8 @@ public class CourseController {
             });
         }
         Course course = new Course();
-        course.setAuthor(courseDTO.getAuthor());
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        course.setAuthor(email);
         course.setTitle(courseDTO.getTitle());
         course.setIcon(courseDTO.getIcon());
         course.setLive(false);
@@ -90,9 +97,9 @@ public class CourseController {
                     "the course id must be present");
         }
         Course updatedCourse = new Course();
-
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         updatedCourse.setId(courseDTO.getId());
-        updatedCourse.setAuthor(courseDTO.getAuthor());
+        updatedCourse.setAuthor(email);
         updatedCourse.setIcon(courseDTO.getIcon());
         updatedCourse.setLive(courseDTO.isLive());
         updatedCourse.setPremium(courseDTO.isPremium());

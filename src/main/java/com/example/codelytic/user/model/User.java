@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
  
-    private int subscriptionStatus;
+    private int subscriptionStatus = 0;
     @Enumerated(EnumType.STRING)
     private Role role;
 

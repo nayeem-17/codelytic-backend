@@ -31,7 +31,7 @@ public class UserController {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
+        // user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
         user.setRole(userDTO.getRole());
 
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
@@ -47,12 +47,13 @@ public class UserController {
         response.put("id", user.getId());
         return ResponseEntity.ok(response);
     }
+
     /*
      * get a user
      */
     @GetMapping("/")
     ResponseEntity<User> getUser() {
-        String email=SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getUser(email);
         return ResponseEntity.ok(user);
     }

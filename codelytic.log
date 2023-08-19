@@ -72,6 +72,7 @@
 2023-08-19 11:09:49 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/course/by-author', 'method': 'GET', 'status': 200, 'executionTime': 806}
 2023-08-19 13:17:41 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/authenticate', 'method': 'POST', 'status': 200, 'executionTime': 1151}
 2023-08-19 13:19:38 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/user/get', 'method': 'GET', 'status': 200, 'executionTime': 292}
+
 2023-08-19 16:00:58 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/authenticate', 'method': 'POST', 'status': 200, 'executionTime': 982}
 2023-08-19 16:01:26 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/user/', 'method': 'GET', 'status': 200, 'executionTime': 285}
 2023-08-19 16:04:01 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/authenticate', 'method': 'POST', 'status': 200, 'executionTime': 1007}

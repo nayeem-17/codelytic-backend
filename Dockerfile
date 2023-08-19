@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=build /app/target/codelytic-0.0.jar ./app.jar
 
 # Expose the port that your Spring Boot application listens on
-EXPOSE 8080
+EXPOSE 8000
 
 # Set the command to run your Spring Boot application
 CMD ["java", "-jar", "app.jar"]

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +46,14 @@ public class UserController {
         Map<String, Long> response = new HashMap<>();
         response.put("id", user.getId());
         return ResponseEntity.ok(response);
+    }
+    /*
+     * get a user
+     */
+    @GetMapping("/")
+    ResponseEntity<User> getUser() {
+        String email=SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getUser(email);
+        return ResponseEntity.ok(user);
     }
 }

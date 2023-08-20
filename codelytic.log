@@ -145,3 +145,7 @@
 2023-08-19 17:25:53 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 521}
 2023-08-19 17:26:23 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 735}
 2023-08-19 17:26:24 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 489}
+2023-08-20 21:53:29 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'OPTIONS', 'status': 200, 'executionTime': 24}
+2023-08-20 21:53:29 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'OPTIONS', 'status': 200, 'executionTime': 24}
+2023-08-20 21:53:36 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 7100}
+2023-08-20 21:53:37 TRACE c.e.c.c.RouteLoggingInterceptor:40 - {'route': '/tags', 'method': 'GET', 'status': 200, 'executionTime': 628}

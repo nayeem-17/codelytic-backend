@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-
     @Autowired
     private JWTService jwtTokenUtil;
 
@@ -80,8 +79,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 System.out.println(
                         "JwtRequestFilter.doFilterInternal() - userEmail: " + userEmail);
-// i want to add the user's email to the request
-                request.setAttribute("user_email", userEmail);
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -95,6 +92,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
         try {
+            // response.setHeader("Access-Control-Allow-Origin", "*");
+            // response.setHeader("Access-Control-Allow-Methods", "*");
+            // response.setHeader("Access-Control-Allow-Headers", "*");
+
             chain.doFilter(request, response);
         } catch (AccessDeniedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");

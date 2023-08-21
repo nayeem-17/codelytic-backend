@@ -1,4 +1,0 @@
-app:
-  name: codelytic-dev
-  ports:
-    - 8000

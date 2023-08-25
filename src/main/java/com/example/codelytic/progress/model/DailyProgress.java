@@ -1,44 +1,32 @@
 package com.example.codelytic.progress.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.example.codelytic.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "user" })
-
-public class Progress {
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+public class DailyProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<CourseProgress> courseProgresses = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<DailyProgress> dailyProgress = new ArrayList<>();
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "progress")
-    private User user;
+    private Date date;
+    private int progress;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

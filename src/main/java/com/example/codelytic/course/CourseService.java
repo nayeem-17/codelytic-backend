@@ -96,8 +96,7 @@ public class CourseService {
         User currentUser = this.userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("User with email " + email + " not found"));
         // currentUser.getProgress().getCourseProgresses().add(course.getProgress());
-        currentUser.getEnrolledCourse().add(
-                course);
+        currentUser.getEnrolledCourse().add(course);
 
         // now create a complete course progress object based on course
         CourseProgress courseProgress = new CourseProgress(course);

@@ -136,9 +136,9 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/enroll")
+    @PostMapping("/{courseId}/enroll")
     ResponseEntity<Object> enrollCourse(
-            @RequestBody Long courseId) {
+            @PathVariable Long courseId) {
         if (courseId < 1) {
             throw new IllegalArgumentException(
                     "the course id must be present");

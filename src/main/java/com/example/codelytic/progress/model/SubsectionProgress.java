@@ -22,9 +22,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 
 public class SubsectionProgress {
@@ -58,4 +60,19 @@ public class SubsectionProgress {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public float getSubsectionProgressInPercentage() {
+        int lectureLength = this.lectures.size();
+        int completedLectureCount = 0;
+        if (lectureLength == 0)
+            return 0.0f;
+        for (Map.Entry<Long, Boolean> entry : this.lectures.entrySet()) {
+            if (entry.getValue()) {
+                completedLectureCount++;
+            }
+        }
+        float quizProgress = this.quizProgress.getQuizProgressInPercentage();
+
+        return (float) (completedLectureCount + quizProgress) / (lectureLength + 1) * 100;
+    }
 }

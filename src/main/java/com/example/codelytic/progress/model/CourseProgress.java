@@ -1,6 +1,7 @@
 package com.example.codelytic.progress.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,11 +24,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "course" })
 public class CourseProgress {
     public CourseProgress(Course course) {
         this.course = course;
         int subsectionLength = course.getSubsections().size();
+        this.subsectionsProgresses = new ArrayList<>(subsectionLength);
         for (int i = 0; i < subsectionLength; i++) {
             this.subsectionsProgresses.add(new SubsectionProgress(course.getSubsections().get(i)));
         }
@@ -49,4 +51,18 @@ public class CourseProgress {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public float getCourseProgressInPercentage() {
+        int subsectionLength = this.subsectionsProgresses.size();
+        float totalProgress = 0.0f;
+        for (int i = 0; i < subsectionLength; i++) {
+            System.out.println(
+                    "Subsection " + this.subsectionsProgresses.get(i).getName() + " progress: "
+                            + this.subsectionsProgresses.get(i).getSubsectionProgressInPercentage());
+            totalProgress += this.subsectionsProgresses.get(i).getSubsectionProgressInPercentage();
+        }
+        if (subsectionLength > 0)
+            return totalProgress / subsectionLength;
+        return 0.0f;
+    }
 }

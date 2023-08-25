@@ -25,6 +25,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 public class CourseProgress {
+    public CourseProgress(Course course) {
+        this.course = course;
+        int subsectionLength = course.getSubsections().size();
+        for (int i = 0; i < subsectionLength; i++) {
+            this.subsectionsProgresses.add(new SubsectionProgress(course.getSubsections().get(i)));
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

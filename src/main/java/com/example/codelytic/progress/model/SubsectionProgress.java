@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.subsection.Subsection;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -27,6 +28,15 @@ import lombok.Data;
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 
 public class SubsectionProgress {
+    public SubsectionProgress(Subsection subsection) {
+        this.name = subsection.getName();
+        int lectureLength = subsection.getLectures().size();
+        for (int i = 0; i < lectureLength; i++) {
+            this.lectures.put(subsection.getLectures().get(i).getId(), false);
+        }
+        this.quizProgress = new QuizProgress(subsection.getQuiz());
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

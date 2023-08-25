@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.quiz.model.Quiz;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CollectionTable;
@@ -24,6 +25,13 @@ import lombok.Data;
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 @Data
 public class QuizProgress {
+    public QuizProgress(Quiz quiz) {
+        int questionLength = quiz.getQuestions().size();
+        for (int i = 0; i < questionLength; i++) {
+            this.questions.put(quiz.getQuestions().get(i).getId(), -1);
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

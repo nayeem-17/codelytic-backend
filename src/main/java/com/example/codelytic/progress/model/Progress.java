@@ -1,11 +1,15 @@
 package com.example.codelytic.progress.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +35,11 @@ public class Progress {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseProgress> courseProgresses;
+
+    private Map<Date, Integer> dailyProgress = new HashMap<Date, Integer>();
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "progress")
+    private User user;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

@@ -69,6 +69,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api-docs/**").permitAll()
                         .requestMatchers("/user/register").permitAll()
                         .requestMatchers("/course/**").permitAll()
+                        .requestMatchers("/tags/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/post/**").permitAll()
                         // .requestMatchers("/tags/**").permitAll()
                         // .requestMatchers("/**").permitAll()

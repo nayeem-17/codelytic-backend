@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.quiz.model.Quiz;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CollectionTable;
@@ -19,11 +20,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapKeyColumn;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 @Data
+@NoArgsConstructor
+
 public class QuizProgress {
+    public QuizProgress(Quiz quiz) {
+        if (quiz == null)
+            return;
+        int questionLength = quiz.getQuestions().size();
+        for (int i = 0; i < questionLength; i++) {
+            this.questions.put(quiz.getQuestions().get(i).getId(), -1);
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,4 +53,17 @@ public class QuizProgress {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public float getQuizProgressInPercentage() {
+        int questionLength = this.questions.size();
+        int answeredQuestion = 0;
+        for (Map.Entry<Long, Integer> entry : this.questions.entrySet()) {
+            if (entry.getValue() != -1) {
+                answeredQuestion++;
+            }
+        }
+        if (questionLength == 0)
+            return 0.0f;
+        return (float) answeredQuestion / questionLength;
+    }
 }

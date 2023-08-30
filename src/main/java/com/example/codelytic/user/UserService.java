@@ -3,6 +3,7 @@ package com.example.codelytic.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.codelytic.progress.model.Progress;
 import com.example.codelytic.user.model.User;
 
 @Service
@@ -11,12 +12,12 @@ public class UserService {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
+        user.setProgress(new Progress());
         return userRepository.save(user);
     }
 
     public User getUser(String email) {
-        return 
-            userRepository
+        return userRepository
                 .findByEmail(email)
                 .orElse(null);
     }

@@ -36,6 +36,7 @@ public class CourseController {
     List<Course> getCourses() {
         return courseService.getCourses();
     }
+
     @GetMapping("/by-author")
     List<Course> getCoursesByAuthor() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -135,6 +136,17 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{courseId}/enroll")
+    ResponseEntity<Object> enrollCourse(
+            @PathVariable Long courseId) {
+        if (courseId < 1) {
+            throw new IllegalArgumentException(
+                    "the course id must be present");
+        }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        courseService.enrollCourse(email, courseId);
+        return ResponseEntity.ok().build();
+    }
 }
 
 // http://localhost:8000/swagger-ui/index.html#/

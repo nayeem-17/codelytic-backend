@@ -33,11 +33,7 @@ public class UserController {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         // user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
-// <<<<<<< auth
-//         user.setRole(userDTO.getRole());
-// =======
         user.setRole(Role.CONTENT_CREATOR);
-// >>>>>>> master
 
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodedPassword);

@@ -9,11 +9,11 @@ public class UserDTO {
     private String email;
     // private String birthDate;
     // private int subscriptionStatus;
-// <<<<<<< auth
-//     private Role role;
-// =======
+    // <<<<<<< auth
     // private Role role;
-// >>>>>>> master
+    // =======
+    // private Role role;
+    // >>>>>>> master
     private String password;
     // private String username;
 }

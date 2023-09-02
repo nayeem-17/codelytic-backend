@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codelytic.post.model.CreatePostDTO;
 import com.example.codelytic.post.model.Post;
-import com.example.codelytic.tag.Tag;
 import com.example.codelytic.tag.TagService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,11 +50,11 @@ public class PostController {
             @RequestBody CreatePostDTO postDTO) {
 
         Post post = new Post(postDTO);
-        List<Tag> tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
         tags = postDTO
                 .getTagIds()
                 .stream()
-                .map(tagId -> this.tagService.findById(tagId))
+                .map(tagId -> this.tagService.findById(tagId).getName())
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         // System.out.println(
@@ -80,12 +79,12 @@ public class PostController {
             @PathVariable Long id,
             @RequestBody CreatePostDTO postDTO) {
         Post post = new Post(postDTO);
-        List<Tag> tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>();
 
         tags = postDTO
                 .getTagIds()
                 .stream()
-                .map(tagId -> this.tagService.findById(tagId))
+                .map(tagId -> this.tagService.findById(tagId).getName())
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 

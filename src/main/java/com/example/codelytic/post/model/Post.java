@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.codelytic.comment.model.Comment;
-import com.example.codelytic.tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -42,8 +41,7 @@ public class Post {
     @JsonIgnoreProperties("post") // Exclude from JSON serialization
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Tag> tags = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

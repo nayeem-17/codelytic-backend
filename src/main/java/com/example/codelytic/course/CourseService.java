@@ -1,6 +1,7 @@
 package com.example.codelytic.course;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -102,6 +103,28 @@ public class CourseService {
         CourseProgress courseProgress = new CourseProgress(course);
         currentUser.getProgress().getCourseProgresses().add(courseProgress);
         this.userRepository.save(currentUser);
+    }
+
+    public void completeLecture(String email, Long courseId, Long subsectionId, Long lectureId) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User with email " + email + " not found"));
+        var progress = user.getProgress().getCourseProgresses()
+                .stream()
+                .filter(
+                        courseProgress -> courseProgress.getCourse().getId().equals(courseId))
+                .findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("Course with id " + courseId + " not found"));
+        Map<Long, Boolean> lectures = progress.getSubsectionsProgresses().stream()
+                .filter(subsectionProgress -> subsectionProgress.getSubsectionId().equals(subsectionId))
+                .findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("Subsection with id " + subsectionId + " not found"))
+                .getLectures();
+        if (lectures.get(lectureId) == true) {
+            throw new IllegalArgumentException("Lecture with id " + lectureId + " already completed");
+        } else {
+            lectures.put(lectureId, true);
+            this.userRepository.save(user);
+        }
     }
 
 }

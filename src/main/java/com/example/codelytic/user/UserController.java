@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.codelytic.user.model.Role;
+import com.example.codelytic.user.model.CreateUserDTO;
+import com.example.codelytic.user.model.GetUserDTO;
 import com.example.codelytic.user.model.User;
-import com.example.codelytic.user.model.UserDTO;
 
 @RequestMapping("/user")
 @RestController
@@ -28,12 +28,12 @@ public class UserController {
      * create a user
      */
     @PostMapping("/register")
-    ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+    ResponseEntity<?> createUser(@RequestBody CreateUserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         // user.setSubscriptionStatus(userDTO.getSubscriptionStatus());
-        user.setRole(Role.CONTENT_CREATOR);
+        user.setRole(userDTO.getRole());
 
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(encodedPassword);
@@ -54,9 +54,16 @@ public class UserController {
      * get a user
      */
     @GetMapping("/")
-    ResponseEntity<User> getUser() {
+    ResponseEntity<GetUserDTO> getUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getUser(email);
-        return ResponseEntity.ok(user);
+        GetUserDTO result = new GetUserDTO();
+
+        result.setName(user.getName());
+        result.setEmail(user.getEmail());
+        result.setRole(user.getRole());
+        result.setId(user.getId());
+
+        return ResponseEntity.ok(result);
     }
 }

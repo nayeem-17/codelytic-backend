@@ -36,6 +36,7 @@ public class SubsectionProgress {
         for (int i = 0; i < lectureLength; i++) {
             this.lectures.put(subsection.getLectures().get(i).getId(), false);
         }
+        this.subsectionId = subsection.getId();
         this.quizProgress = new QuizProgress(subsection.getQuiz());
     }
 
@@ -44,6 +45,7 @@ public class SubsectionProgress {
     private Long id;
 
     private String name;
+    private Long subsectionId;
 
     @ElementCollection
     @CollectionTable(name = "lecture_progress", joinColumns = @JoinColumn(name = "subsection_progress_id"))

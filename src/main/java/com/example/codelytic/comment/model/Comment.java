@@ -50,6 +50,8 @@ public class Comment {
     @JsonIgnoreProperties({ "post", "parentComment" }) // Exclude from JSON serialization
     private List<Comment> childComments = new ArrayList<>();
 
+    private String commentedBy;
+
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;

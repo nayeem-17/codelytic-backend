@@ -29,6 +29,11 @@ public class CommentService {
     }
     // delete a comment with all it's child comment
 
+    public Long getNumberOfCommentsByUser(String commentedBy) {
+        return this.commentRepository
+                .countByCommentedBy(commentedBy);
+    }
+
     // public void deleteCommentAndChildren(Long commentId) {
     // Comment comment = this.commentRepository.findById(commentId).orElse(null);
     // if (comment != null)

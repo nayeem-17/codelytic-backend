@@ -35,11 +35,13 @@ public class QuizProgress {
         for (int i = 0; i < questionLength; i++) {
             this.questions.put(quiz.getQuestions().get(i).getId(), -1);
         }
+        this.quizId = quiz.getId();
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long quizId;
 
     @ElementCollection
     @CollectionTable(name = "quiz_progress_question", joinColumns = @JoinColumn(name = "quiz_progress_id"))

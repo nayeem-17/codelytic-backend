@@ -26,8 +26,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @JsonIgnoreProperties(value = {
-        "createdAt",
-        "updatedAt",
+        // "createdAt",
+        // "updatedAt",
         "post"
 })
 public class Comment {

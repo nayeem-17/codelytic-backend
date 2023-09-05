@@ -1,7 +1,9 @@
 package com.example.codelytic.course;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -146,6 +148,26 @@ public class CourseController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         courseService.enrollCourse(email, courseId);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "{courseId}/complete/{subsectionId}/lecture/{lectureId}")
+    ResponseEntity<?> completeLecture(
+            @PathVariable Long courseId,
+            @PathVariable Long subsectionId,
+            @PathVariable Long lectureId) {
+        Map<String, String> response = new HashMap<>();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            this.courseService.completeLecture(email, courseId, subsectionId, lectureId);
+            response.put(
+                    "status",
+                    "completed");
+        } catch (Exception e) {
+            response.put(
+                    "status",
+                    "failed");
+        }
+        return ResponseEntity.ok().body(response);
     }
 }
 

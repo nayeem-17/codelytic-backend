@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.codelytic.subsection.Subsection;
 import com.example.codelytic.subsection.SubsectionRepository;
+import com.example.codelytic.user.UserRepository;
+import com.example.codelytic.user.model.User;
 
 @Service
 public class LectureService {
@@ -12,6 +14,8 @@ public class LectureService {
     private LectureRepository lectureRepository;
     @Autowired
     private SubsectionRepository subsectionRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public Lecture createLecture(Long subsectionId, Lecture lecture) {
         Subsection subsection = this.subsectionRepository.findById(subsectionId).orElse(null);
@@ -44,6 +48,14 @@ public class LectureService {
             Long lectureId) {
         this.lectureRepository.deleteById(lectureId);
         return true;
+    }
+
+    public void completeLecture(String email, Long lectureId) {
+        User currentUser = this.userRepository.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User not found"));
+        Lecture lecture = this.lectureRepository.findById(lectureId).orElseThrow(
+                () -> new RuntimeException("Lecture not found"));
+        currentUser.getProgress();
     }
 
 }

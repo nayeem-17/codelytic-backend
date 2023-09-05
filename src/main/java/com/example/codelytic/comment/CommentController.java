@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.example.codelytic.comment.model.Comment;
 import com.example.codelytic.comment.model.CreateCommentDTO;
 import com.example.codelytic.post.PostService;
 import com.example.codelytic.post.model.Post;
+import com.example.codelytic.user.UserService;
+import com.example.codelytic.user.model.User;
 
 @RestController
 @RequestMapping("/comment")
@@ -27,6 +30,8 @@ public class CommentController {
     private CommentService commentService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
 
     /*
      * ROUTE LIST
@@ -40,6 +45,25 @@ public class CommentController {
      * comments(replies)
      * 
      */
+
+    /*
+     * number of comments done by user
+     */
+    @GetMapping("/user/")
+    public ResponseEntity<?> getNumberOfCommentsByUser() {
+        Map<String, Long> response = new HashMap<>();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = this.userService.getUser(email);
+        if (currentUser == null) {
+            Map<String, String> response1 = new HashMap<>();
+            response1.put("message", "Invalid user");
+            return ResponseEntity.badRequest().body(response);
+        }
+        String commentedBy = currentUser.getName();
+        response.put("numberOfComments", commentService.getNumberOfCommentsByUser(commentedBy));
+        return ResponseEntity.ok().body(response);
+    }
+
     /*
      * post comment
      * reply to a comment which is also a post comment
@@ -54,7 +78,15 @@ public class CommentController {
             response.put("message", "Invalid post id");
             return ResponseEntity.badRequest().body(response);
         }
-
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = this.userService.getUser(email);
+        if (currentUser == null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Invalid user");
+            return ResponseEntity.badRequest().body(response);
+        }
+        comment.setCommentedBy(currentUser.getName());
+        System.out.println(comment);
         // Fetch the post
         Post post = postService.getPost(commentDTO.getPostId());
 

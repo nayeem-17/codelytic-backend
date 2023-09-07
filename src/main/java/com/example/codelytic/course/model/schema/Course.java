@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.progress.model.CourseProgress;
 import com.example.codelytic.subsection.Subsection;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,7 +21,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "courseProgress" })
 
 public class Course {
     @Id
@@ -37,6 +38,9 @@ public class Course {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Subsection> subsections;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CourseProgress> courseProgress;
 
     private List<String> tags;
 

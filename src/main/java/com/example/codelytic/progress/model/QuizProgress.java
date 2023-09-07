@@ -31,9 +31,11 @@ public class QuizProgress {
     public QuizProgress(Quiz quiz) {
         if (quiz == null)
             return;
+        System.out.println(quiz);
+
         int questionLength = quiz.getQuestions().size();
         for (int i = 0; i < questionLength; i++) {
-            this.questions.put(quiz.getQuestions().get(i).getId(), false);
+            this.questions.put(quiz.getQuestions().get(i).getId(), -1);
         }
         this.quizId = quiz.getId();
     }
@@ -47,7 +49,7 @@ public class QuizProgress {
     @CollectionTable(name = "quiz_progress_question", joinColumns = @JoinColumn(name = "quiz_progress_id"))
     @MapKeyColumn(name = "question_id")
     @Column(name = "user_answer")
-    private Map<Long, Boolean> questions = new HashMap<>();
+    private Map<Long, Integer> questions = new HashMap<>();
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -59,8 +61,8 @@ public class QuizProgress {
     public float getQuizProgressInPercentage() {
         int questionLength = this.questions.size();
         int answeredQuestion = 0;
-        for (Map.Entry<Long, Boolean> entry : this.questions.entrySet()) {
-            if (entry.getValue() == true) {
+        for (Map.Entry<Long, Integer> entry : this.questions.entrySet()) {
+            if (entry.getValue() != -1) {
                 answeredQuestion++;
             }
         }

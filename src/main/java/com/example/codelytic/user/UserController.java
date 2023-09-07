@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codelytic.user.model.CreateUserDTO;
-import com.example.codelytic.user.model.GetUserDTO;
 import com.example.codelytic.user.model.User;
 
 @RequestMapping("/user")
@@ -54,16 +53,16 @@ public class UserController {
      * get a user
      */
     @GetMapping("/")
-    ResponseEntity<GetUserDTO> getUser() {
+    ResponseEntity<User> getUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getUser(email);
-        GetUserDTO result = new GetUserDTO();
+        // GetUserDTO result = new GetUserDTO();
+        //
+        // result.setName(user.getName());
+        // result.setEmail(user.getEmail());
+        // result.setRole(user.getRole());
+        // result.setId(user.getId());
 
-        result.setName(user.getName());
-        result.setEmail(user.getEmail());
-        result.setRole(user.getRole());
-        result.setId(user.getId());
-
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(user);
     }
 }

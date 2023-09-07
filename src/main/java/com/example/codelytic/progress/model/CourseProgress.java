@@ -16,8 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +25,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt", "course" })
+// @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "course_id",
+// "id" }))
 public class CourseProgress {
     public CourseProgress(Course course) {
         this.course = course;
@@ -39,7 +41,7 @@ public class CourseProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Course course;
 
     @OneToMany(cascade = CascadeType.ALL)

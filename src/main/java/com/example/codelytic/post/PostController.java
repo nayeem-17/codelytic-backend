@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,16 +55,20 @@ public class PostController {
         tags = postDTO
                 .getTagIds()
                 .stream()
-                .map(tagId -> this.tagService.findById(tagId).getName())
+                .map(tagId -> this.tagService.findById(tagId))
                 .filter(Objects::nonNull)
+                .map(tag -> tag.getName())
                 .collect(Collectors.toList());
+        // tags = tags_.stream()
+
         // System.out.println(
         // "tag_ids: " + Arrays.toString(postDTO.getTagIds().toArray()) + " " +
         // tags.size());
         // System.out.println(
         // "tags: " + Arrays.toString(tags.toArray()) + " " + tags.size());
         post.setTags(tags);
-        post = discussionService.createPost(post);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        post = discussionService.createPost(post, email);
 
         Map<String, Long> response = new HashMap<>();
         response.put("id", post.getId());

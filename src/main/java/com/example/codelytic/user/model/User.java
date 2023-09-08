@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.codelytic.course.model.schema.Course;
-import com.example.codelytic.like.Like;
 import com.example.codelytic.post.model.Post;
 import com.example.codelytic.progress.model.Progress;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -57,10 +56,6 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Post> posts;
-
-    @JsonIgnoreProperties("likedBy")
-    @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Like> likes;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "progress_id", referencedColumnName = "id")

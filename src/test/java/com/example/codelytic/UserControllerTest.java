@@ -57,9 +57,9 @@ public class UserControllerTest {
                 // Create a user
                 CreateUserDTO userDTO = new CreateUserDTO();
                 userDTO.setName("Test User");
-                userDTO.setEmail("test@example.com");
+                userDTO.setEmail("string");
                 userDTO.setRole(Role.USER);
-                userDTO.setPassword("password");
+                userDTO.setPassword("string");
 
                 ResultActions createUserResult = mockMvc.perform(MockMvcRequestBuilders
                                 .post("/user/register")
@@ -70,8 +70,8 @@ public class UserControllerTest {
 
                 // Authenticate the user
                 AuthenticationRequestDto authenticationRequest = new AuthenticationRequestDto();
-                authenticationRequest.setUsername("test@example.com");
-                authenticationRequest.setPassword("password");
+                authenticationRequest.setUsername("string");
+                authenticationRequest.setPassword("string");
                 MvcResult authenticationResult = mockMvc.perform(MockMvcRequestBuilders.post("/authenticate")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(authenticationRequest)))
@@ -83,7 +83,7 @@ public class UserControllerTest {
                                 .get("token").asText();
                 System.out.println(token);
 
-                Authentication auth = new UsernamePasswordAuthenticationToken("test@example.com", "password");
+                Authentication auth = new UsernamePasswordAuthenticationToken("string", "string");
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
                 // Make a GET request to /user with the obtained token

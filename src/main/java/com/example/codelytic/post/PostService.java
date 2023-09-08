@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.codelytic.comment.CommentRepository;
 import com.example.codelytic.comment.model.Comment;
 import com.example.codelytic.post.model.Post;
+import com.example.codelytic.user.UserRepository;
 
 @Service
 public class PostService {
@@ -15,8 +16,11 @@ public class PostService {
     private PostRepository discussionRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    UserRepository userRepository;
 
-    public Post createPost(Post post) {
+    public Post createPost(Post post, String email) {
+        post.setAuthor(email);
         return discussionRepository.save(post);
     }
 

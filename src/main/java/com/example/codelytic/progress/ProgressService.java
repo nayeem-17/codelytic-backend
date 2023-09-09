@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,5 +139,16 @@ public class ProgressService {
                         dailyProgress.getActivities().add(DailyActivity.COMPLETED_QUIZ);
                 }
                 this.progressRepository.save(progress);
+        }
+
+        public List<DailyProgress> getDailyProgress(String email) {
+                User user = this.userRepository.findByEmail(email)
+                                .orElseThrow(() -> new UsernameNotFoundException(
+                                                String.format("User with email %s not found", email)));
+                Progress progress = user.getProgress();
+                // first check if created or not
+                List<DailyProgress> dailyProgress = progress.getDailyProgress();
+
+                return dailyProgress;
         }
 }

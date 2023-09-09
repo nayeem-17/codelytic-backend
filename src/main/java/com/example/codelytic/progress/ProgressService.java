@@ -19,14 +19,15 @@ import com.example.codelytic.progress.model.Progress;
 import com.example.codelytic.user.UserRepository;
 import com.example.codelytic.user.model.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ProgressService {
         // @Autowired
         // private ProgressRepository progressRepository;
         @Autowired
         private UserRepository userRepository;
-        @Autowired
-        private DailyProgressRepository dailyProgressRepository;
         @Autowired
         private ProgressRepository progressRepository;
 
@@ -97,7 +98,6 @@ public class ProgressService {
                                 .orElse(null);
 
                 if (dailyProgress == null) {
-
                         DailyProgress newDailyProgress = new DailyProgress();
                         newDailyProgress.setDate(formattedDate);
                         newDailyProgress.setActivities(
@@ -111,11 +111,7 @@ public class ProgressService {
                                         "dailyProgress: " + dailyProgress.getDate() + " "
                                                         + dailyProgress.getActivities().size());
                 } else {
-                        System.out.println(
-                                        "dailyProgress: " + dailyProgress.getDate() + " "
-                                                        + dailyProgress.getActivities().size());
-                        System.out.println(
-                                        "WWWWWWWWWWWWWWWWWWWHHHHHHHHHHHHHHHHHHHHHHHHHHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYy");
+                        log.info("activity: " + activity + " " + dailyProgress.getActivities().size());
                 }
 
                 if (activity.equals(DailyActivity.LOGGED_IN)) {
@@ -128,11 +124,11 @@ public class ProgressService {
                                 dailyProgress.getActivities().add(DailyActivity.LOGGED_IN);
                         }
 
-                } else {
-
+                } else if (activity.equals(DailyActivity.COMPLETED_LECTURE)) {
+                        dailyProgress.getActivities().add(DailyActivity.COMPLETED_LECTURE);
+                } else if (activity.equals(DailyActivity.COMPLETED_QUIZ)) {
+                        dailyProgress.getActivities().add(DailyActivity.COMPLETED_QUIZ);
                 }
                 this.progressRepository.save(progress);
-
-                // this.userRepository.save(user);
         }
 }

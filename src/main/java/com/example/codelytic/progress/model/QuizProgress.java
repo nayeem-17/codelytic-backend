@@ -62,7 +62,7 @@ public class QuizProgress {
         int questionLength = this.questions.size();
         int answeredQuestion = 0;
         for (Map.Entry<Long, Integer> entry : this.questions.entrySet()) {
-            if (entry.getValue() != -1) {
+            if (entry.getValue() == 1) {
                 answeredQuestion++;
             }
         }

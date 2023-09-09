@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.codelytic.course.model.schema.Course;
 import com.example.codelytic.progress.model.CourseProgress;
+import com.example.codelytic.progress.model.QuizProgress;
 import com.example.codelytic.user.UserRepository;
 import com.example.codelytic.user.model.User;
 
@@ -123,6 +124,29 @@ public class CourseService {
             throw new IllegalArgumentException("Lecture with id " + lectureId + " already completed");
         } else {
             lectures.put(lectureId, true);
+            this.userRepository.save(user);
+        }
+    }
+
+    public void completeQuiz(String email, Long courseId, Long subsectionId, Map<Long, Integer> questionAnswers) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User with email " + email + " not found"));
+        var progress = user.getProgress().getCourseProgresses()
+                .stream()
+                .filter(
+                        courseProgress -> courseProgress.getCourse().getId().equals(courseId))
+                .findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("Course with id " + courseId + " not found"));
+        QuizProgress quizProgress = progress.getSubsectionsProgresses().stream()
+                .filter(subsectionProgress -> subsectionProgress.getSubsectionId().equals(subsectionId))
+                .findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("Subsection with id " + subsectionId + " not found"))
+                .getQuizProgress();
+        if (quizProgress.getQuizProgressInPercentage() != 0) {
+            throw new IllegalArgumentException("Quiz for subsection id " + subsectionId + " already completed");
+        } else {
+            quizProgress.getQuestions().putAll(questionAnswers);
+            // quizAnswers = questionAnswers;
             this.userRepository.save(user);
         }
     }

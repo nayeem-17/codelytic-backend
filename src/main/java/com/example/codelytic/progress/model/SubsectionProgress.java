@@ -74,6 +74,8 @@ public class SubsectionProgress {
             }
         }
         float quizProgress = this.quizProgress.getQuizProgressInPercentage();
+        if (quizProgress > 0)
+            quizProgress = 1;
 
         return (float) (completedLectureCount + quizProgress) / (lectureLength + 1) * 100;
     }

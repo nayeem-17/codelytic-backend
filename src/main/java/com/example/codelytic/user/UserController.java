@@ -5,15 +5,20 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.codelytic.progress.model.Progress;
 import com.example.codelytic.user.model.CreateUserDTO;
+import com.example.codelytic.user.model.Role;
 import com.example.codelytic.user.model.User;
 
 @RequestMapping("/user")
@@ -38,6 +43,7 @@ public class UserController {
         user.setPassword(encodedPassword);
 
         try {
+            user.setProgress(new Progress());
             user = userService.saveUser(user);
         } catch (Exception e) {
             System.out.println(e);
@@ -64,5 +70,27 @@ public class UserController {
         // result.setId(user.getId());
 
         return ResponseEntity.ok(user);
+    }
+
+    /*
+     * Get all user
+     * will be called when the authority is admin
+     */
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    ResponseEntity<?> getAllUser() {
+        return ResponseEntity.ok(userService.getAllUser());
+    }
+
+    @PutMapping("/role/{userEmail}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    ResponseEntity<?> changeRole(
+            @PathVariable String userEmail,
+            @RequestBody Role role) {
+
+        User user = userService.getUser(userEmail);
+        user.setRole(role);
+        userService.saveUser(user);
+        return ResponseEntity.ok().build();
     }
 }

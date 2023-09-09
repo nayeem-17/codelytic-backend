@@ -166,16 +166,18 @@ public class CourseController {
             response.put(
                     "status",
                     "completed");
+            try {
+                log.info(
+                        "adding daily activity: {}", DailyActivity.COMPLETED_LECTURE);
+                this.progressService.addActivity(DailyActivity.COMPLETED_LECTURE, email);
+            } catch (Exception e) {
+                log.error(
+                        "Error while adding daily activity: {}", e.getLocalizedMessage());
+            }
         } catch (Exception e) {
             response.put(
                     "status",
                     "failed");
-        }
-        try {
-            this.progressService.addActivity(DailyActivity.COMPLETED_LECTURE, email);
-        } catch (Exception e) {
-            log.error(
-                    "Error while adding daily activity: {}", e.getLocalizedMessage());
         }
         return ResponseEntity.ok().body(response);
     }
@@ -192,16 +194,18 @@ public class CourseController {
             response.put(
                     "status",
                     "completed");
+            try {
+                log.info(
+                        "adding daily activity: {}", DailyActivity.COMPLETED_QUIZ);
+                this.progressService.addActivity(DailyActivity.COMPLETED_QUIZ, email);
+            } catch (Exception e) {
+                log.error(
+                        "Error while adding daily activity: {}", e.getLocalizedMessage());
+            }
         } catch (Exception e) {
             response.put(
                     "status",
                     "failed");
-        }
-        try {
-            this.progressService.addActivity(DailyActivity.COMPLETED_QUIZ, email);
-        } catch (Exception e) {
-            log.error(
-                    "Error while adding daily activity: {}", e.getLocalizedMessage());
         }
         return ResponseEntity.ok().body(response);
     }

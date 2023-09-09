@@ -116,17 +116,25 @@ public class ProgressService {
 
                 if (activity.equals(DailyActivity.LOGGED_IN)) {
                         if (dailyProgress.getActivities()
-                                        .stream().filter(
-                                                        activity_ -> activity_
-                                                                        .equals(DailyActivity.LOGGED_IN))
+                                        .stream().filter(activity_ -> activity_.equals(DailyActivity.LOGGED_IN))
                                         .findFirst()
                                         .orElse(null) == null) {
                                 dailyProgress.getActivities().add(DailyActivity.LOGGED_IN);
+                        } else {
+                                log.info("already logged in");
                         }
-
                 } else if (activity.equals(DailyActivity.COMPLETED_LECTURE)) {
+                        log.info("dailyProgress: " + dailyProgress.getDate() + " "
+                                        + dailyProgress.getActivities().size()
+                                        + " " + dailyProgress.getActivities().contains(
+                                                        DailyActivity.COMPLETED_LECTURE));
                         dailyProgress.getActivities().add(DailyActivity.COMPLETED_LECTURE);
                 } else if (activity.equals(DailyActivity.COMPLETED_QUIZ)) {
+                        log.info(
+                                        "dailyProgress: " + dailyProgress.getDate() + " "
+                                                        + dailyProgress.getActivities().size()
+                                                        + " " + dailyProgress.getActivities().contains(
+                                                                        DailyActivity.COMPLETED_QUIZ));
                         dailyProgress.getActivities().add(DailyActivity.COMPLETED_QUIZ);
                 }
                 this.progressRepository.save(progress);

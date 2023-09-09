@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.codelytic.course.model.schema.Course;
-import com.example.codelytic.like.Like;
 import com.example.codelytic.post.model.Post;
 import com.example.codelytic.progress.model.Progress;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,6 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -57,15 +57,11 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Post> posts;
 
-    @JsonIgnoreProperties("likedBy")
-    @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Like> likes;
-
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "progress_id", referencedColumnName = "id")
     private Progress progress;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Course> enrolledCourse;
 
     @Override

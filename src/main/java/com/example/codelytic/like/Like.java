@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.codelytic.comment.model.Comment;
-import com.example.codelytic.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -28,9 +27,9 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+
     @JoinColumn(name = "liked_by_id")
-    private User likedBy;
+    private String likedBy;
 
     @ManyToOne
     @JoinColumn(name = "comment_id")

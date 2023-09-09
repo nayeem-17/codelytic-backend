@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.codelytic.course.model.dto.CreateCourseDTO;
 import com.example.codelytic.course.model.dto.UpdateCourseDTO;
 import com.example.codelytic.course.model.schema.Course;
+import com.example.codelytic.progress.ProgressService;
+import com.example.codelytic.progress.model.DailyActivity;
 import com.example.codelytic.tag.Tag;
 import com.example.codelytic.tag.TagService;
 
@@ -33,6 +35,8 @@ public class CourseController {
     private CourseService courseService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private ProgressService progressService;
 
     @GetMapping("/")
     List<Course> getCourses() {
@@ -162,6 +166,42 @@ public class CourseController {
             response.put(
                     "status",
                     "completed");
+            try {
+                log.info(
+                        "adding daily activity: {}", DailyActivity.COMPLETED_LECTURE);
+                this.progressService.addActivity(DailyActivity.COMPLETED_LECTURE, email);
+            } catch (Exception e) {
+                log.error(
+                        "Error while adding daily activity: {}", e.getLocalizedMessage());
+            }
+        } catch (Exception e) {
+            response.put(
+                    "status",
+                    "failed");
+        }
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping(value = "{courseId}/complete/{subsectionId}/quiz")
+    ResponseEntity<?> completeQuiz(
+            @PathVariable Long courseId,
+            @PathVariable Long subsectionId,
+            @RequestBody Map<Long, Integer> questionAnswers) {
+        Map<String, String> response = new HashMap<>();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            this.courseService.completeQuiz(email, courseId, subsectionId, questionAnswers);
+            response.put(
+                    "status",
+                    "completed");
+            try {
+                log.info(
+                        "adding daily activity: {}", DailyActivity.COMPLETED_QUIZ);
+                this.progressService.addActivity(DailyActivity.COMPLETED_QUIZ, email);
+            } catch (Exception e) {
+                log.error(
+                        "Error while adding daily activity: {}", e.getLocalizedMessage());
+            }
         } catch (Exception e) {
             response.put(
                     "status",

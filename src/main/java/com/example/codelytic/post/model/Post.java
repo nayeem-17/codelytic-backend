@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "author" })
 
 public class Post {
     public Post(CreatePostDTO postDTO) {
@@ -42,6 +42,8 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     private List<String> tags = new ArrayList<>();
+
+    private String author;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

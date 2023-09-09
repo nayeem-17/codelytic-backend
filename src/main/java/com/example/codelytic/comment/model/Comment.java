@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.codelytic.like.Like;
 import com.example.codelytic.post.model.Post;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -49,6 +50,11 @@ public class Comment {
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({ "post", "parentComment" }) // Exclude from JSON serialization
     private List<Comment> childComments = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    @JsonIgnoreProperties({ "comment" }) // Exclude from JSON serialization
+    private List<Like> likes = new ArrayList<>();
 
     private String commentedBy;
 

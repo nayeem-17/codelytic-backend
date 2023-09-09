@@ -151,4 +151,28 @@ public class CourseService {
         }
     }
 
+    public Boolean setLive(Long courseId) {
+        Course course = this.courseRepository.findById(courseId).orElseThrow(
+                () -> new IllegalArgumentException("Course with id " + courseId + " not found"));
+        if (course.isLive()) {
+            return false;
+        }
+        course.setLive(true);
+        this.courseRepository.save(course);
+        return true;
+    }
+
+    public Boolean setPremium(Long courseId) {
+        Course course = this.courseRepository.findById(courseId).orElseThrow(
+                () -> new IllegalArgumentException("Course with id " + courseId + " not found"));
+        if (course.isPremium()) {
+            course.setPremium(false);
+            this.courseRepository.save(course);
+            return false;
+        }
+        course.setPremium(true);
+        this.courseRepository.save(course);
+        return true;
+    }
+
 }

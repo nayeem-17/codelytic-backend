@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codelytic.course.model.dto.CreateCourseDTO;
-import com.example.codelytic.course.model.dto.UpdateCourseDTO;
 import com.example.codelytic.course.model.schema.Course;
 import com.example.codelytic.progress.ProgressService;
 import com.example.codelytic.progress.model.DailyActivity;
@@ -91,45 +91,82 @@ public class CourseController {
         return ResponseEntity.ok().body(course);
     }
 
-    @PutMapping
-    ResponseEntity<Object> updateCourse(
-            @RequestBody UpdateCourseDTO courseDTO) {
-        log.trace("update course controller");
-        if (courseDTO == null) {
-            throw new IllegalArgumentException(
-                    "The request body is empty or does not contain the required data for the CreateCourseDTO object.");
-        }
-        if (courseDTO.getId() < 1) {
+    @PutMapping("/{courseId}/live")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    ResponseEntity<?> setLive(
+            @PathVariable Long courseId) {
+        if (courseId < 1) {
             throw new IllegalArgumentException(
                     "the course id must be present");
         }
-        Course updatedCourse = new Course();
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        updatedCourse.setId(courseDTO.getId());
-        updatedCourse.setAuthor(email);
-        updatedCourse.setIcon(courseDTO.getIcon());
-        updatedCourse.setLive(courseDTO.isLive());
-        updatedCourse.setPremium(courseDTO.isPremium());
-        updatedCourse.setTitle(courseDTO.getTitle());
-        updatedCourse.setDescription(courseDTO.getDescription());
-        List<String> tags = new ArrayList<>();
-        if (courseDTO.getTagIds().size() > 0) {
-            courseDTO.getTagIds().forEach(tagId -> {
-                if (tagId > 0) {
-                    Tag tag = tagService.findById(tagId);
-                    if (tag != null)
-                        tags.add(tag.getName());
-                }
-            });
-        }
-        System.out.println(tags);
-        updatedCourse.setTags(tags);
-        System.out.println(
-                "updated course: " + updatedCourse.toString());
-        courseService.updateCourse(updatedCourse);
+        Boolean response = this.courseService.setLive(courseId);
+        if (response) {
 
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
+    @PutMapping("/{courseId}/premium")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    ResponseEntity<?> setPremium(
+            @PathVariable Long courseId) {
+        if (courseId < 1) {
+            throw new IllegalArgumentException(
+                    "the course id must be present");
+        }
+        try {
+            this.courseService.setPremium(courseId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    // @PutMapping
+    // ResponseEntity<Object> updateCourse(
+    // @RequestBody UpdateCourseDTO courseDTO) {
+    // log.trace("update course controller");
+    // if (courseDTO == null) {
+    // throw new IllegalArgumentException(
+    // "The request body is empty or does not contain the required data for the
+    // CreateCourseDTO object.");
+    // }
+    // if (courseDTO.getId() < 1) {
+    // throw new IllegalArgumentException(
+    // "the course id must be present");
+    // }
+    // Course updatedCourse = new Course();
+    // String email =
+    // SecurityContextHolder.getContext().getAuthentication().getName();
+    // updatedCourse.setId(courseDTO.getId());
+    // updatedCourse.setAuthor(email);
+    // updatedCourse.setIcon(courseDTO.getIcon());
+    // updatedCourse.setLive(courseDTO.isLive());
+    // updatedCourse.setPremium(courseDTO.isPremium());
+    // updatedCourse.setTitle(courseDTO.getTitle());
+    // updatedCourse.setDescription(courseDTO.getDescription());
+    // List<String> tags = new ArrayList<>();
+    // if (courseDTO.getTagIds().size() > 0) {
+    // courseDTO.getTagIds().forEach(tagId -> {
+    // if (tagId > 0) {
+    // Tag tag = tagService.findById(tagId);
+    // if (tag != null)
+    // tags.add(tag.getName());
+    // }
+    // });
+    // }
+    // System.out.println(tags);
+    // updatedCourse.setTags(tags);
+    // System.out.println(
+    // "updated course: " + updatedCourse.toString());
+    // courseService.updateCourse(updatedCourse);
+
+    // return ResponseEntity.ok().build();
+    // }
 
     @DeleteMapping("/{id}")
     ResponseEntity<Object> deleteCourse(

@@ -1,5 +1,7 @@
 package com.example.codelytic.progress;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codelytic.progress.model.CourseProgress;
+import com.example.codelytic.progress.model.DailyProgress;
 import com.example.codelytic.progress.model.Progress;
 
 @RequestMapping("/progress")
@@ -37,6 +40,12 @@ public class ProgressController {
     public ResponseEntity<?> getProgressInPercentage() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Object response = progressService.getProgressInPercentage(email);
+        return ResponseEntity.ok().body(response);
+    }
+        @GetMapping("/daily-progress")
+    public ResponseEntity<?> getDailyProgress() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<DailyProgress> response = progressService.getDailyProgress(email);
         return ResponseEntity.ok().body(response);
     }
 }
